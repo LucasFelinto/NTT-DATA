@@ -3,4 +3,48 @@
 //     query text and running the command:
 //     SFDX: Execute SOQL Query with Currently Selected Text
 
-SELECT Id, Name FROM Account
+SELECT Id, Name FROM Account WHERE SLAExpirationDate__c >= LAST_N_DAYS:50
+
+SELECT Id, Name, (SELECT Name FROM Opportunity WHERE CreatedDate >= LAST_N_DAYS:50) FROM Account
+
+
+
+
+
+
+
+
+SELECT Id, Name, (SELECT Name FROM Account) FROM Opportunity
+
+SELECT Name, Account.Inativo__c, StageName FROM Opportunity WHERE CloseDate = LAST_N_DAYS:30 AND Account.Inativo__c != true AND StageName != 'Closed Won' AND StageName != 'Negotiation/Review'
+
+
+SELECT WhoId, Account.Name FROM Task WHERE NOT (Account.SLAExpirationDate__c = LAST_N_DAYS:1)
+
+
+SELECT Name FROM Account
+
+SELECT Id, Name FROM Account WHERE Id IN ( SELECT WhoId FROM Task WHERE CreatedDate = LAST_N_DAYS:1)
+
+
+SELECT Id FROM Task WHERE WhoId IN ( SELECT Id FROM Account WHERE MailingCity = 'Twin Falls' )
+
+
+SELECT WhatId
+FROM Task
+WHERE WhatId IN
+  (
+    SELECT Id
+    FROM Account
+    WHERE Inativo__c != true
+  )
+
+
+
+SELECT Id
+FROM Account
+WHERE Id IN
+  (
+    SELECT WhatId
+    FROM Task
+  )

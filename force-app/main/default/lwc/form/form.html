@@ -1,0 +1,16 @@
+<template>
+  <lightning-card
+    title="Alterar dados"
+    variant="Narrow"
+    icon-name="standard:account"
+  >
+    <div class="slds-var-p-around_large">
+      <lightning-record-form
+        object-api-name={objectApiName}
+        record-id={recordId}
+        fields={fields}
+      >
+      </lightning-record-form>
+    </div>
+  </lightning-card>
+</template>
